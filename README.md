@@ -22,7 +22,7 @@ There are, for the moments, three kinds of fechados, namely:
 -   Month_of_Year:  a `Month_of_Year(4)` includes all dates (or datetimes) that are on the 4th Month of a year (i.e., April).
 
 We have **operators** working on date (or datetimes) and fechados.
-- ∈ : This is most fundamental operator, as it fundamentally defines the fechados, determing whether a certain date is in it or not.
+- ∈ : This is most fundamental operator, as it fundamentally defines the fechados, determing whether a certain date is in it or not. The converse operator ∋ comes for free 😄
 - ∩ and ∪: creates respectively intersections and unions of fechados. The resulting objects are of type `IntFechado` and `UnFechado` respectively. Composition happens from the left: `Day_of_Week(1) ∩ Day_of_Month(1) ∩ Month_of_Year(1)` is the same of `((Day_of_Week(1) ∩ Day_of_Month(1)) ∩ Month_of_Year(1))`. We also have the convenience constructor functions `IntFechados()` and `UnFechados()` that work with arrays fechados (i.e., `IntFechados([Day_of_Week(1), Day_of_Month(1), Month_of_Year(1)])`).
 - `succ()` and `prec()` : these functions returns either successors or predecessors of **dates** or **fechados**. The last argument is always compulsory, and it is the number of succ (or prec) steps to take.
 
