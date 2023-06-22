@@ -23,5 +23,52 @@ There are, for the moments, three kinds of fechados, namely:
 
 We have **operators** working on date (or datetimes) and fechados.
 - ∈ : This is most fundamental operator, as it fundamentally defines the fechados, determing whether a certain date is in it or not.
-- ∩ and ∩: creates respectively intersections and unions of fechados. The resulting objects are of type `IntFechado` and `UnFechado` respectively. Composition happens from the left: `Day_of_Week(1) ∩ Day_of_Month(1) ∩ Month_of_Year(1)` is the same of `((Day_of_Week(1) ∩ Day_of_Month(1)) ∩ Month_of_Year(1))`. We also have the convenience constructor functions `IntFechados()` and `UnFechados()` that work with arrays fechados (i.e., `IntFechados([Day_of_Week(1), Day_of_Month(1), Month_of_Year(1)])`).
-- `succ()` and `prec()` : these functions returns either successors or predecessors of **dates** or **fechados**.
+- ∩ and ∪: creates respectively intersections and unions of fechados. The resulting objects are of type `IntFechado` and `UnFechado` respectively. Composition happens from the left: `Day_of_Week(1) ∩ Day_of_Month(1) ∩ Month_of_Year(1)` is the same of `((Day_of_Week(1) ∩ Day_of_Month(1)) ∩ Month_of_Year(1))`. We also have the convenience constructor functions `IntFechados()` and `UnFechados()` that work with arrays fechados (i.e., `IntFechados([Day_of_Week(1), Day_of_Month(1), Month_of_Year(1)])`).
+- `succ()` and `prec()` : these functions returns either successors or predecessors of **dates** or **fechados**. The last argument is always compulsory, and it is the number of succ (or prec) steps to take.
+
+## Examples
+
+```julia
+using TOL
+using Dates
+
+today = now()
+
+today ∈ Day_of_Week(1) ∩ Day_of_Month(1) ∩ Month_of_Year(1)
+
+today ∈ Day_of_Week(4) ∪ Day_of_Week(5)
+
+succ(Month_of_Year(1),1)
+prec(Month_of_Year(1),2)
+
+succ(today,Month_of_Year(1),2)
+```
+
+## Extension
+
+A fechado is defined by three main object:
+- a struct inhering from `AbstractFechado`, providing the necessary information and (eventually) defining range of viability:
+    ```julia
+    struct Month_of_Year <: AbstractFechado
+        n::Int
+        Month_of_Year(n) = n > 12 || n < 0 ? error("The month of the year can not be negative nor greater than 12") : new(n)
+    end
+    ```
+- a method for the inclusion function, ∈, determining whether a date is in a fechado or not:
+    ```julia
+    function ∈(a_date::Tt,a_Month_of_Year::Month_of_Year)::Bool where  {Tt<:TimeType}
+        is_in = month(a_date) == a_Month_of_Year.n ? true : false
+        return is_in
+    end
+    ```
+- a collection of `succ()` functions, determing what comes next:
+    ```julia
+    succ(a_date::Tt,T::Month_of_Year,k) where {Tt<:TimeType} = a_date + Month(k)
+    function succ(T::Month_of_Year,k)
+        new_n = mod((T.n + k),12)
+        new_n = new_n == 0 ? 12 : new_n
+        return Month_of_Year(new_n)
+    end
+    ```
+
+For convenience, we keep them all in `src/Fechados`.
