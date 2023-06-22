@@ -2,18 +2,18 @@ struct IntFechados <: AbstractFechado
     fechados::Array{<:AbstractFechado}
 end
 
-∈(a_date::Date,a_IntFechado::IntFechados)::Bool = all(a_date .∈ a_IntFechado.fechados)
+∈(a_date::Tt,a_IntFechado::IntFechados) where {Tt <: TimeType} = all(a_date .∈ a_IntFechado.fechados)
 
 struct UnFechados <: AbstractFechado
     fechados::Array{<:AbstractFechado}
 end
 
-∈(a_date::Date,a_UnFechados::UnFechados)::Bool = any(a_date .∈ a_UnFechados.fechados)
+∈(a_date::Tt,a_UnFechados::UnFechados) where {Tt <: TimeType} = any(a_date .∈ a_UnFechados.fechados)
 
 ∩(f::F, l::L) where {F <: AbstractFechado, L <: AbstractFechado} = IntFechados([f,l])
 ∪(f::F, l::L) where {F <: AbstractFechado, L <: AbstractFechado} = UnFechados([f,l])
 
 
-prec(a_date::Date,Type::D,k) where D <: AbstractFechado = succ(a_date,Type,-k)
-prec(Type::D,a_date::Date,k) where D <: AbstractFechado = succ(Type,a_date,-k)
+prec(a_date::Tt,Type::D,k) where {D <: AbstractFechado, Tt <: TimeType} = succ(a_date,Type,-k)
+prec(Type::D,a_date::Tt,k) where {D <: AbstractFechado, Tt <: TimeType} = succ(Type,a_date,-k)
 prec(Type::D,k) where D <: AbstractFechado = succ(Type,-k)
