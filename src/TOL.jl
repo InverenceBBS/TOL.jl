@@ -1,5 +1,32 @@
 module TOL
 
-# Write your package code here.
+using Dates
+import Base: ∈
+import Base: ∩
+import Base: ∪ 
+
+## Declaration of types and structs for temporal settings
+
+abstract type AbstractFechado end
+
+export Day_of_Month
+include("Fechados/Day_of_Month.jl")
+
+export Day_of_Week
+include("Fechados/Day_of_Week.jl")
+
+export Month_of_Year
+include("Fechados/Month_of_Year.jl")
+
+## Declaration of operators and composed temporal types
+
+export IntFechados
+export UnFechados
+export ∈
+export ∩
+export ∪
+export succ
+export prec
+include("Utilities.jl")
 
 end

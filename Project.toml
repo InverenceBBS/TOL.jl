@@ -1,7 +1,10 @@
 name = "TOL"
 uuid = "770931ca-7258-4a36-8bb5-07024fdd77cf"
 authors = ["gvdr <giulio.dallariva@canterbury.ac.nz> and contributors"]
-version = "1.0.0-DEV"
+version = "0.0.1-DEV"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
 [compat]
 julia = "1.6"
