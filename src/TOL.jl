@@ -7,6 +7,7 @@ import Base: ∪
 import Base: -
 import Base: ==
 import Base: show
+import Base: range
 
 ## Declaration of types and structs for temporal settings
 
