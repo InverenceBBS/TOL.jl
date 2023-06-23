@@ -1,10 +1,12 @@
-struct IntFechados <: AbstractFechado
-    fechados::Array{<:AbstractFechado}
-end
-
+core(AF::F) where {F<:AtomicFechado} = AF.core
 n(AF::F) where {F<:AtomicFechado} = n(core(AF))
 range(AF::F) where {F<:AtomicFechado} = range(core(AF))
 f_is_in(AF::F) where {F<:AtomicFechado} = f_is_in(core(AF))
+
+
+struct IntFechados <: AbstractFechado
+    fechados::Array{<:AbstractFechado}
+end
 
 ∈(a_date::Tt,a_IntFechado::IntFechados) where {Tt <: TimeType} = all(a_date .∈ a_IntFechado.fechados)
 
