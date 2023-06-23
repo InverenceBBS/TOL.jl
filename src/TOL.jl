@@ -38,6 +38,8 @@ export ==
 export ∈
 export ∩
 export ∪
+export -
+export C
 export succ
 export prec
 export n, range, f_is_in
