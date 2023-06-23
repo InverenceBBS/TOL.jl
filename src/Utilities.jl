@@ -48,7 +48,7 @@ prec(Type::D,k) where D <: AtomicFechado = succ(Type,-k)
 
 Base.show(io::IO, z::AF) where {AF<:AtomicFechado} = print(io, typeof(z),"(",n(z),")")
 Base.show(io::IO, ::MIME"text/plain", z::AF) where {AF<:AtomicFechado} =
-           print(io, typeof(z),":\n n = ",
-           n(z), "\n range =",
-           range(z), "\n comparison function =",
+           print(io, typeof(z),":\n n: ",
+           n(z), "\n range: ",
+           range(z), "\n comparison function: ",
            f_is_in(z))
