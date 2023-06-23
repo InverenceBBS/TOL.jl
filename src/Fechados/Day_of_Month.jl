@@ -2,11 +2,7 @@ struct Day_of_Month <: AtomicFechado
     core::Atomic
 end
 
-function Day_of_Month(n::Int,
-                      range = collect(1:1:31),
-                      f_is_in = dayofmonth)
-    return Day_of_Month(Atomic(n,range,f_is_in))
-end
+Day_of_Month(n) = Day_of_Month(Atomic(n, collect(1:1:31), dayofmonth))
 
 succ(a_date::Tt,T::Day_of_Month,k) where {Tt<:TimeType} = a_date + Day(k)
 
