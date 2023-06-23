@@ -7,7 +7,8 @@ A quick and dirty implementation of TOL time representation, in pure Julia.
 To install the yet unregistered packages 
 
 ```julia
-julia>] add https://github.com/gvdr/TOL.jl
+using Pkg
+Pkg.add("https://github.com/gvdr/TOL.jl")
 ```
 
 ## What's in the package
@@ -46,29 +47,22 @@ succ(today,Month_of_Year(1),2)
 
 ## Extension
 
-A fechado is defined by three main object:
-- a struct inhering from `AbstractFechado`, providing the necessary information and (eventually) defining range of viability:
+An atomic fechado is defined by three main object. The first two are mandatory:
+- a **struct** inhering from `AtomicFechado`, that has the only field `core`:
     ```julia
-    struct Month_of_Year <: AbstractFechado
-        n::Int
-        Month_of_Year(n) = n > 12 || n < 0 ? error("The month of the year can not be negative nor greater than 12") : new(n)
+    struct Day_of_Week <: AtomicFechado
+        core::Atomic
     end
     ```
-- a method for the inclusion function, ∈, determining whether a date is in a fechado or not:
+- a **constructor** for the atomic fechado, that provides the default information regarding the **range** and the **comparison function**, for example, to define an atomic fechado that considers the `dayofweek` of a date (or datetime) and has a range from 0 to 6, we write:
     ```julia
-    function ∈(a_date::Tt,a_Month_of_Year::Month_of_Year)::Bool where  {Tt<:TimeType}
-        is_in = month(a_date) == a_Month_of_Year.n ? true : false
-        return is_in
-    end
+    Day_of_Week(n::N) where {N<:Int}  = Day_of_Week(Atomic(n, collect(1:1:7), dayofweek))
     ```
-- a collection of `succ()` functions, determing what comes next:
+    In general, a `range` and `n` can be defined using whatever number (in this example we forec `n` to be an integer). The comparison function defines the inclusion by determining whether `comparison_function(a_date) == n`, and can be any of the `Dates` functions or user defined.
+- **optionally**, a collection of `succ()` functions, determing what is the next date, when considering it as an element of a certain atomic fechado. For example:
     ```julia
-    succ(a_date::Tt,T::Month_of_Year,k) where {Tt<:TimeType} = a_date + Month(k)
-    function succ(T::Month_of_Year,k)
-        new_n = mod((T.n + k),12)
-        new_n = new_n == 0 ? 12 : new_n
-        return Month_of_Year(new_n)
-    end
+    succ(a_date::Tt,T::Day_of_Week,k) where {Tt<:TimeType} = a_date + Day(k)
     ```
+    The general successor function for the *class* of any defined Atomic Fechados is defined in  `src/Utilities.jl`; a method overriding it can be provided by a function of signature `function succ(T::ASF,k)` where `ASF` is the name of the user defined Atomic Fechado.
 
-For convenience, we keep them all in `src/Fechados`.
+For convenience, we keep them all in `src/Fechados/`.

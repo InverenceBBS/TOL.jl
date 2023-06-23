@@ -27,12 +27,13 @@ end
 ∪(f::F, l::L) where {F <: AbstractFechado, L <: AbstractFechado} = UnFechados([f,l])
 
 function C(a_Fechado::F) where {F<:AtomicFechado}
-    this_range = a_Fechado.range[a_Fechado.range .!= a_Fechado.n]
+    this_range = range(a_Fechado)[range(a_Fechado) .!= n(a_Fechado)]
     return UnFechados([F(k) for k in this_range])
 end
 
 function succ(T::AtomicFechado,k)
     new_n = mod((n(T) + k),maximum(range(T)))
+    new_n = new_n < minimum(range(T)) ? maximum(range(T)) : new_n
     return typeof(T)(new_n)
 end
 
