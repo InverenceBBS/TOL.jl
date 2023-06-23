@@ -6,12 +6,15 @@ import Base: ∩
 import Base: ∪ 
 import Base: -
 import Base: ==
+import Base: show
 
 ## Declaration of types and structs for temporal settings
 
 abstract type AbstractFechado end
-
 abstract type AtomicFechado <: AbstractFechado end
+
+export AbstractFechado
+export AtomicFechado
 
 function ∈(a_date::Tt,FeAt::AF)::Bool where {Tt<:TimeType, AF<:AtomicFechado}
     is_in = f_is_in(FeAt)(a_date) == n(FeAt) ? true : false
