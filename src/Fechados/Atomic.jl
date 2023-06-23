@@ -1,4 +1,4 @@
-struct Atomic <: Atomic
+struct Atomic <: AbstractFechado
     n::Number
     range::Vector{<:Number}
     f_is_in::Function

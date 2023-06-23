@@ -27,7 +27,7 @@ function succ(T::AtomicFechado,k)
     return Day_of_Week(new_n)
 end
 
-function -(f::F, l::L) where {F <: AbstractFechado, L <: AtomicFechado} = f ∩ C(l)
+-(f::F, l::L) where {F <: AbstractFechado, L <: AtomicFechado} = f ∩ C(l)
 
 
 prec(a_date::Tt,Type::D,k) where {D <: AtomicFechado, Tt <: TimeType} = succ(a_date,Type,-k)
