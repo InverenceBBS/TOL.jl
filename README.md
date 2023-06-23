@@ -25,6 +25,7 @@ There are, for the moments, three kinds of fechados, namely:
 We have **operators** working on date (or datetimes) and fechados.
 - ∈ : This is most fundamental operator, as it fundamentally defines the fechados, determing whether a certain date is in it or not. The converse operator ∋ comes for free 😄
 - ∩ and ∪: creates respectively intersections and unions of fechados. The resulting objects are of type `IntFechado` and `UnFechado` respectively. Composition happens from the left: `Day_of_Week(1) ∩ Day_of_Month(1) ∩ Month_of_Year(1)` is the same of `((Day_of_Week(1) ∩ Day_of_Month(1)) ∩ Month_of_Year(1))`. We also have the convenience constructor functions `IntFechados()` and `UnFechados()` that work with arrays fechados (i.e., `IntFechados([Day_of_Week(1), Day_of_Month(1), Month_of_Year(1)])`).
+- Functions `C()` to build complementary sets (all the fechados in a range minus one), and `-` to subtract sets.
 - `succ()` and `prec()` : these functions returns either successors or predecessors of **dates** or **fechados**. The last argument is always compulsory, and it is the number of succ (or prec) steps to take.
 
 ## Examples
@@ -41,6 +42,8 @@ today ∈ Day_of_Week(4) ∪ Day_of_Week(5)
 
 succ(Month_of_Year(1),1)
 prec(Month_of_Year(1),2)
+
+Ω(Month_of_Year(1))
 
 succ(today,Month_of_Year(1),2)
 ```
@@ -66,3 +69,9 @@ An atomic fechado is defined by three main object. The first two are mandatory:
     The general successor function for the *class* of any defined Atomic Fechados is defined in  `src/Utilities.jl`; a method overriding it can be provided by a function of signature `function succ(T::ASF,k)` where `ASF` is the name of the user defined Atomic Fechado.
 
 For convenience, we keep them all in `src/Fechados/`.
+
+# TODO
+
+- [ ] implement a stronger logic for the operators (checking for equality, so to simplify algebraic operations)
+- [ ] introduce comparison for composed objects
+- [ ] maybe experiment with different operator symbols to better capture the algebraic properties.

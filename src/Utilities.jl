@@ -23,6 +23,8 @@ end
 
 ∈(a_date::Tt,a_UnFechados::UnFechados) where {Tt <: TimeType} = any(a_date .∈ a_UnFechados.fechados)
 
+Ω(AF::F) where {F<:AtomicFechado} = UnFechados([typeof(AF)(k) for k in range(AF)])
+
 ∩(f::F, l::L) where {F <: AbstractFechado, L <: AbstractFechado} = IntFechados([f,l])
 ∪(f::F, l::L) where {F <: AbstractFechado, L <: AbstractFechado} = UnFechados([f,l])
 
