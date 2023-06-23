@@ -5,6 +5,7 @@ import Base: ∈
 import Base: ∩
 import Base: ∪ 
 import Base: -
+import Base: ==
 
 ## Declaration of types and structs for temporal settings
 
@@ -33,6 +34,7 @@ include("Fechados/Month_of_Year.jl")
 
 export IntFechados
 export UnFechados
+export ==
 export ∈
 export ∩
 export ∪

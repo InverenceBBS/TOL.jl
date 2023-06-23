@@ -1,8 +1,15 @@
+# define accessor functions
 core(AF::F) where {F<:AtomicFechado} = AF.core
 n(AF::F) where {F<:AtomicFechado} = n(core(AF))
 range(AF::F) where {F<:AtomicFechado} = range(core(AF))
 f_is_in(AF::F) where {F<:AtomicFechado} = f_is_in(core(AF))
 
+# define equality
+==(a::T, b::T) where T <: Atomic =
+    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+==(a::T, b::T) where T <: AtomicFechado =
+    a.core == b.core
+## notice that here we could also define an equality for AtomicFechados of different type and composites
 
 struct IntFechados <: AbstractFechado
     fechados::Array{<:AbstractFechado}
@@ -25,8 +32,8 @@ function C(a_Fechado::F) where {F<:AtomicFechado}
 end
 
 function succ(T::AtomicFechado,k)
-    new_n = mod((n(T) + k),max(range(T)))
-    return Day_of_Week(new_n)
+    new_n = mod((n(T) + k),maximum(range(T)))
+    return typeof(T)(new_n)
 end
 
 -(f::F, l::L) where {F <: AbstractFechado, L <: AtomicFechado} = f ∩ C(l)
