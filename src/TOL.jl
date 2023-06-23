@@ -17,6 +17,9 @@ function ∈(a_date::Tt,FeAt::AF)::Bool where {Tt<:TimeType, AF<:AtomicFechado}
     return is_in
 end
 
+export Atomic
+include("Fechados/Atomic.jl")
+
 export Day_of_Month
 include("Fechados/Day_of_Month.jl")
 
@@ -35,6 +38,7 @@ export ∩
 export ∪
 export succ
 export prec
+export n, range, f_is_in
 include("Utilities.jl")
 
 end
